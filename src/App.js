@@ -66,6 +66,19 @@ class App extends Component {
     );
   };
 
+  componentDidMount() {
+    const localContacts = localStorage.getItem('contacts');
+    const parcedLocalContacts = JSON.parse(localContacts);
+
+    this.setState({ contacts: parcedLocalContacts });
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.contacts !== prevState.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+  };
+
   render() {
     const { filter } = this.state;
     const visibleContacts = this.getVisibleContact();
